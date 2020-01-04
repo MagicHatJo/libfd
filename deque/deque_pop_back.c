@@ -20,10 +20,19 @@ void	*deque_pop_back(t_deque *deque)
 	content = NULL;
 	if (!deque_size(deque))
 		return (content);
-	new_end = deque->end->prev;
-	content = deque->end->content;
-	deque->begin->prev = new_end;
-	new_end->next = deque->begin;
+	if (deque_size(deque) == 1)
+	{
+		new_end = NULL;
+		content = deque->end->content;
+		deque->begin = NULL;
+	}
+	else
+	{
+		new_end = deque->end->prev;
+		content = deque->end->content;
+		deque->begin->prev = new_end;
+		new_end->next = deque->begin;
+	}
 	free(deque->end);
 	deque->end = new_end;
 	deque->size--;
